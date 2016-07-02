@@ -26,8 +26,8 @@ after_success: |
     layout: docs
     title: Documentation
     ---
-    
-    EOF
+
+EOF
     cat docs/installation.md docs/usage.md docs/authentication.md docs/uploading.md docs/other.md >> gh-pages/docs/index.md
     cd gh-pages
     if [ -z "$(git diff --exit-code)" ]; then
