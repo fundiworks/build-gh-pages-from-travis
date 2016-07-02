@@ -1,10 +1,6 @@
 language: generic
 addons:
   ssh_known_hosts: github.com
-branches:
-  only:
-    - master
-    - gh-pages
 before_install:
   # Setup using:
   # $ travis encrypt-file ~/.ssh/travis_phpZenfolio_rsa --add
