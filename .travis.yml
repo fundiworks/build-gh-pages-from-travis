@@ -21,8 +21,7 @@ after_success: |
     REPO=$(git config remote.origin.url)
     SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
     git clone --quiet --branch=gh-pages $REPO gh-pages
-    echo "---
-    layout: docs
+    echo "---\\nlayout: docs
     title: Documentation
     ---
     " > gh-pages/docs/index.md
