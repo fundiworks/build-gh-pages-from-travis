@@ -6,13 +6,13 @@ before_install:
   # $ travis encrypt-file ~/.ssh/travis_phpZenfolio_rsa --add
   # $ base64 travis_phpZenfolio_rsa.enc > travis_phpZenfolio_rsa_base64
   # $ travis env set DEPLOY_KEY "$(cat travis_phpZenfolio_rsa_base64)" --private
-- echo $DEPLOY_KEY > .travis/travis_phpZenfolio_rsa_base64
-- base64 --decode --ignore-garbage .travis/travis_phpZenfolio_rsa_base64 > .travis/travis_phpZenfolio_rsa.enc
+- echo $DEPLOY_KEY > ~\/.travis/travis_phpZenfolio_rsa_base64
+- base64 --decode --ignore-garbage ~\/.travis/travis_phpZenfolio_rsa_base64 > ~\/.travis/travis_phpZenfolio_rsa.enc
 - openssl aes-256-cbc -K $encrypted_ebd306156baf_key -iv $encrypted_ebd306156baf_iv
-  -in .travis/travis_phpZenfolio_rsa.enc -out ~\/.ssh/travis_phpZenfolio_rsa -d
-- echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  -in ~\/.travis/travis_phpZenfolio_rsa.enc -out ~\/.ssh/travis_phpZenfolio_rsa -d
+- echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~\/.ssh/config
 - eval `ssh-agent -s`
-- ssh-add ~/.ssh/travis_phpZenfolio_rsa
+- ssh-add ~\/.ssh/travis_phpZenfolio_rsa
 after_success: |
   if [ $TRAVIS_BRANCH == 'master' ]; then
     cat docs/installation.md docs/usage.md docs/authentication.md docs/uploading.md docs/other.md > index.md
