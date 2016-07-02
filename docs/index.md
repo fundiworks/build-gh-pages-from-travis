@@ -1,3 +1,4 @@
+---\nlayout: docs\ntitle: Documentation\n---\n
 # Requirements
 
 * PHP >= 5.6.0,
