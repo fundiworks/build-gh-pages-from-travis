@@ -1,5 +1,4 @@
----
-      layout: docs
+---\nlayout: docs
       title: Documentation
       ---
       
