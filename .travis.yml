@@ -6,13 +6,21 @@ before_install:
   # $ travis encrypt-file ~/.ssh/travis_phpZenfolio_rsa --add
   # $ base64 travis_phpZenfolio_rsa.enc > travis_phpZenfolio_rsa_base64
   # $ travis env set DEPLOY_KEY "$(cat travis_phpZenfolio_rsa_base64)" --private
+  #
+  # Save the base64 encoded key from the $DEPLOY_KEY env var to a file
   - echo $DEPLOY_KEY > ~/.ssh/travis_phpZenfolio_rsa_base64
+  # base64 decode the file
   - base64 --decode --ignore-garbage ~/.ssh/travis_phpZenfolio_rsa_base64 > ~/.ssh/travis_phpZenfolio_rsa.enc
+  # Decrypt the file
   - openssl aes-256-cbc -K $encrypted_ebd306156baf_key -iv $encrypted_ebd306156baf_iv
     -in ~/.ssh/travis_phpZenfolio_rsa.enc -out ~/.ssh/travis_phpZenfolio_rsa -d
+  # Tighten permissions
   - chmod 0600 ~/.ssh/travis_phpZenfolio_rsa
+  # Trust github.com
   - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  # Start the ssh-agent
   - eval `ssh-agent -s`
+  # Add our SSH key so we don't get prompted
   - ssh-add ~/.ssh/travis_phpZenfolio_rsa
 after_success: |
   set -x
@@ -29,7 +37,7 @@ after_success: |
       exit 0
     fi
 
-    git -c user.email="lildood+travisci@gmail.com" -c user.name="Colin Seymour c/o Travis CI" commit -am 'Travis CI: automatically updated docs'
+    git -c user.email="$COMMIT_EMAIL" -c user.name="$COMMIT_USER" commit -am 'Travis CI: automatically updated docs'
     git push $SSH_REPO gh-pages
   else
     echo "This commit was made against the $TRAVIS_BRANCH and not the master! No deploy!"
