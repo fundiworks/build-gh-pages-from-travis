@@ -22,6 +22,10 @@ after_success: |
   set -x
   set -e
   if [ $TRAVIS_BRANCH == 'master' ]; then
+    REPO=$(git config remote.origin.url)
+    echo $REPO
+    git clone --quiet --branch=gh-pages $REPO gh-pages
+    cd gh-pages
     cat docs/installation.md docs/usage.md docs/authentication.md docs/uploading.md docs/other.md > index.md
     git checkout gh-pages
     cat index.md > docs/index.md
