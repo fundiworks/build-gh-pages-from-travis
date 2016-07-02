@@ -1,0 +1,32 @@
+language: generic
+addons:
+  ssh_known_hosts: github.com
+before_install:
+  # Setup using:
+  # $ travis encrypt-file ~/.ssh/travis_phpZenfolio_rsa --add
+  # $ base64 travis_phpZenfolio_rsa.enc > travis_phpZenfolio_rsa_base64
+  # $ travis env set DEPLOY_KEY "$(cat travis_phpZenfolio_rsa_base64)" --private
+- echo $DEPLOY_KEY > .travis/travis_phpZenfolio_rsa_base64
+- base64 --decode --ignore-garbage .travis/travis_phpZenfolio_rsa_base64 > .travis/travis_phpZenfolio_rsa.enc
+- openssl aes-256-cbc -K $encrypted_ebd306156baf_key -iv $encrypted_ebd306156baf_iv
+  -in .travis/travis_phpZenfolio_rsa.enc -out ~\/.ssh/travis_phpZenfolio_rsa -d
+- echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- eval `ssh-agent -s`
+- ssh-add ~/.ssh/travis_phpZenfolio_rsa
+after_success: |
+  if [ $TRAVIS_BRANCH == 'master' ]; then
+    cat docs/installation.md docs/usage.md docs/authentication.md docs/uploading.md docs/other.md > index.md
+    git checkout gh-pages
+    cat index.md > docs/index.md
+
+    if [ -z "$(git diff --exit-code)" ]; then
+      echo "No changes to the output on this push; exiting."
+      exit 0
+    fi
+
+    git -c user.email="lildood+travisci@gmail.com" -c user.name="Colin Seymour c/o Travis CI" commit -am 'Travis CI: automatically updated docs'
+    git push origin gh-pages
+  else
+    echo "This commit was made against the $TRAVIS_BRANCH and not the master! No deploy!"
+    exit 0
+  fi
