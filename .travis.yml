@@ -15,6 +15,8 @@ before_install:
 - eval `ssh-agent -s`
 - ssh-add ~/.ssh/travis_phpZenfolio_rsa
 after_success: |
+  set -x
+  set -e
   if [ $TRAVIS_BRANCH == 'master' ]; then
     cat docs/installation.md docs/usage.md docs/authentication.md docs/uploading.md docs/other.md > index.md
     git checkout gh-pages
