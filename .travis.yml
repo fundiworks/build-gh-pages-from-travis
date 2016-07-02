@@ -19,7 +19,7 @@ after_success: |
   set -e
   if [ $TRAVIS_BRANCH == 'master' ]; then
     REPO=$(git config remote.origin.url)
-    echo $REPO
+    SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
     git clone --quiet --branch=gh-pages $REPO gh-pages
     cd gh-pages
     cat docs/installation.md docs/usage.md docs/authentication.md docs/uploading.md docs/other.md > index.md
@@ -32,7 +32,7 @@ after_success: |
     fi
 
     git -c user.email="lildood+travisci@gmail.com" -c user.name="Colin Seymour c/o Travis CI" commit -am 'Travis CI: automatically updated docs'
-    git push origin gh-pages
+    git push $SSH_REPO gh-pages
   else
     echo "This commit was made against the $TRAVIS_BRANCH and not the master! No deploy!"
     exit 0
