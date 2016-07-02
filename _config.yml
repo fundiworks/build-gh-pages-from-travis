@@ -1,0 +1,29 @@
+name:          phpZenfolio
+domain:        phpzenfolio.com    # This is used by the Analytics tracking code
+description:   PHP wrapper for the Zenfolio API
+url:           http://phpzenfolio.com
+author:        Colin Seymour (@lildude)
+analytics_id:  UA-118457-10
+timezone:      Europe/London
+encoding:      UTF-8
+baseurl:       ""
+permalink:     /news/:title/
+latest_version: 1.3
+gems:
+  - jemoji
+markdown:      kramdown
+kramdown:
+  input: GFM
+
+# Hard code our nav here to keep things in order and precisely as we want
+navigation:
+  - title: Overview
+    url: /
+  - title: Documentation
+    url: /docs/
+  - title: Download
+    url: /download/
+  - title: News
+    url: /news/
+  - title: About
+    url: /about/
