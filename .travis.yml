@@ -21,11 +21,8 @@ after_success: |
     REPO=$(git config remote.origin.url)
     SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
     git clone --quiet --branch=gh-pages $REPO gh-pages
+    cat docs/installation.md docs/usage.md docs/authentication.md docs/uploading.md docs/other.md > gh-pages/docs/index.md
     cd gh-pages
-    cat docs/installation.md docs/usage.md docs/authentication.md docs/uploading.md docs/other.md > index.md
-    git checkout gh-pages
-    cat index.md > docs/index.md
-
     if [ -z "$(git diff --exit-code)" ]; then
       echo "No changes to the output on this push; exiting."
       exit 0
