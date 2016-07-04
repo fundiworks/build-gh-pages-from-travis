@@ -31,5 +31,3 @@ $ curl -s http://getcomposer.org/installer | php
 ```
 
 **Note: phpZenfolio 2.0.0 and later is not backwardly compatible with earlier releases.**
-
-IGNOREME
