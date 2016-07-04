@@ -25,7 +25,7 @@ before_install:
 after_success: |
   set -x
   set -e
-  if [ $TRAVIS_BRANCH == 'master' ]; then
+  if [ "${TRAVIS_PULL_REQUEST}" = "false" -a "$TRAVIS_BRANCH" == "master" ]; then
     REPO=$(git config remote.origin.url)
     SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
     git clone --quiet --branch=gh-pages $REPO gh-pages
