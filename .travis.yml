@@ -40,6 +40,6 @@ after_success: |
     git -c user.email="$COMMIT_EMAIL" -c user.name="$COMMIT_USER" commit -am 'Travis CI: automatically updated docs'
     git push $SSH_REPO gh-pages
   else
-    echo "This commit was made against the $TRAVIS_BRANCH and not the master! No deploy!"
+    echo "This commit was made in a branch or PR. Not updating the docs."
     exit 0
   fi
