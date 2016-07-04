@@ -26,8 +26,6 @@ before_install:
 after_success: |
   set -x
   set -e
-  cat ~/.ssh/travis_phpZenfolio_rsa
-  echo $encrypted_ebd306156baf_key
   if [ "${TRAVIS_PULL_REQUEST}" = "false" -a "$TRAVIS_BRANCH" == "master" ]; then
     REPO=$(git config remote.origin.url)
     SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
