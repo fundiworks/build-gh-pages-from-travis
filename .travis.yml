@@ -22,9 +22,11 @@ before_install:
   - eval `ssh-agent -s`
   # Add our SSH key so we don't get prompted
   - ssh-add ~/.ssh/travis_phpZenfolio_rsa
+  # Now generate our docs, but only when merging to master.
 after_success: |
   set -x
   set -e
+  cat ~/.ssh/travis_phpZenfolio_rsa
   if [ "${TRAVIS_PULL_REQUEST}" = "false" -a "$TRAVIS_BRANCH" == "master" ]; then
     REPO=$(git config remote.origin.url)
     SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
